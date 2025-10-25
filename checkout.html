@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Checkout - Refit - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+    <div class="checkout-container">
+        <!-- Header -->
+        <header class="checkout-header">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="checkout-logo" onclick="goHome()">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">
+                    <div class="brand-name">Refit - Home</div>
+                    <div class="brand-tagline">CHECKOUT</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cart Items -->
+        <section class="cart-section">
+            <h2>YOUR PRODUCT</h2>
+            <button class="clear-cart-btn" onclick="clearCart()">🗑️ CLEAR CART</button>
+            <div class="cart-items" id="cartItems">
+                <div id="itemsList"></div>
+                <div class="total-row">
+                    <span>Delivery Fee:</span>
+                    <span>$2</span>
+                </div>
+                <div class="total-row grand-total" id="totalDisplay">TOTAL: $0</div>
+            </div>
+        </section>
+
+        <!-- Checkout Form -->
+        <section class="form-section">
+            <h2>DELIVERY INFORMATION</h2>
+            <div class="form">
+                <div class="form-group">
+                    <label>FULL NAME *</label>
+                    <input type="text" id="customerName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>PHONE NUMBER *</label>
+                    <input type="tel" id="customerPhone" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>DELIVERY METHOD *</label>
+                    <div class="delivery-options">
+                        <div class="delivery-option" onclick="selectDelivery('jnt')">
+                            <div class="option-name">J&T EXPRESS</div>
+                            <div class="option-desc">1-2 business days • $2</div>
+                        </div>
+                        <div class="delivery-option" onclick="selectDelivery('virak')">
+                            <div class="option-name">VIRAK BUNTHAN</div>
+                            <div class="option-desc">1-2 business days • $2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>DELIVERY ADDRESS *</label>
+                    <textarea id="deliveryAddress" placeholder="Enter your complete delivery address" required></textarea>
+                </div>
+
+                <button class="primary-btn" onclick="validateAndShowQR()">
+                    💳 COMPLETE PURCHASE
+                </button>
+                <button class="secondary-btn" onclick="goBack()">
+                    ← CONTINUE SHOPPING
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- QR Payment Modal -->
+    <div class="modal" id="qrModal">
+        <div class="modal-content qr-modal-content">
+            <button class="close-btn" onclick="cancelPayment()">×</button>
+            <h2>PAYMENT</h2>
+            <div class="payment-total" id="paymentTotal">Total: $0</div>
+            
+            <div class="qr-section">
+                <div class="qr-title">Scan QR Code to Pay</div>
+                <img src="images/qr-code.png" alt="QR Code" class="qr-code" id="qrCodeImage"
+                     onerror="this.src='https://via.placeholder.com/200x200/2c2c2c/ffffff?text=QR+Code'">
+                <div class="qr-instruction">Scan the QR code with your banking app</div>
+            </div>
+
+            <div class="upload-section">
+                <div class="upload-title">Upload Payment Receipt *</div>
+                <input type="file" id="receiptFile" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+                <div class="file-requirements">Supported formats: JPG, PNG, PDF (Max 5MB)</div>
+                
+                <div class="modal-buttons">
+                    <button class="confirm-btn" onclick="confirmUpload()">
+                        📤 CONFIRM UPLOAD
+                    </button>
+                    <button class="cancel-btn" onclick="cancelPayment()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content success-modal">
+            <div class="success-icon">✓</div>
+            <h2>PAYMENT CONFIRMED!</h2>
+            <p>Thank you for your purchase 🎉</p>
+            <p>Your order is being processed</p>
+            <p class="order-info">You will receive a confirmation message shortly</p>
+            <button class="modal-btn" onclick="goHome()">
+                🏠 RETURN TO STORE
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Processing your order...</p>
+    </div>
+
+    <!-- Load checkout script -->
+    <script src="js/checkout.js"></script>
+</body>
+</html>

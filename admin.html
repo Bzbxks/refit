@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Panel - ÉLITE MENS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Password Protection -->
+    <script>
+        // Simple password protection for admin page
+        const ADMIN_PASSWORD = "2394";
+        let attempts = 0;
+        const maxAttempts = 3;
+
+        function checkAdminAccess() {
+            if (attempts >= maxAttempts) {
+                alert("Too many failed attempts. Redirecting to main page.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const password = prompt("🔒 Enter Admin Password:");
+            
+            if (password === ADMIN_PASSWORD) {
+                // Password correct - show the admin content
+                document.body.style.display = 'flex';
+                initializeMobileMenu();
+                return true;
+            } else if (password === null) {
+                // User clicked cancel - redirect to main page
+                window.location.href = "index.html";
+                return false;
+            } else {
+                // Wrong password
+                attempts++;
+                const remaining = maxAttempts - attempts;
+                alert(`❌ Wrong password! ${remaining} attempt(s) remaining.`);
+                checkAdminAccess();
+            }
+        }
+
+        // Mobile menu functionality
+        function initializeMobileMenu() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.querySelector('.admin-sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (menuToggle && sidebar && overlay) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('mobile-open');
+                    overlay.style.display = sidebar.classList.contains('mobile-open') ? 'block' : 'none';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('mobile-open');
+                    overlay.style.display = 'none';
+                });
+            }
+        }
+
+        // Hide content until password is verified
+        document.body.style.display = 'none';
+        
+        // Check password when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAdminAccess();
+        });
+    </script>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <div class="admin-container">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="mobile-logo">É</div>
+            <span class="mobile-title">ADMIN PANEL</span>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="admin-logo">É</div>
+                <h2>ADMIN PANEL</h2>
+                <button class="sidebar-close" id="sidebarClose">×</button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#products" class="nav-item active" onclick="showSection('products'); closeMobileMenu();">
+                    📦 Product Management
+                </a>
+                <a href="#sold-out" class="nav-item" onclick="showSection('sold-out'); closeMobileMenu();">
+                    📦 Sold Out Products
+                </a>
+                <a href="#orders" class="nav-item" onclick="showSection('orders'); closeMobileMenu();">
+                    📋 Order Management
+                </a>
+                <a href="#reports" class="nav-item" onclick="showSection('reports'); closeMobileMenu();">
+                    📊 Sales Reports
+                </a>
+                <a href="#website" class="nav-item" onclick="showSection('website'); closeMobileMenu();">
+                    ⚙️ Website Settings
+                </a>
+                <a href="index.html" class="nav-item home-link">
+                    🏠 Back to Store
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Products Section -->
+            <section id="products" class="admin-section active">
+                <h1>Product Management</h1>
+                
+                <!-- Add Product Form -->
+                <div class="add-product-form">
+                    <h3>Add New Product</h3>
+                    <div class="form-grid">
+                        <div class="form-group-full">
+                            <input type="text" id="productTitle" placeholder="Product Title" class="form-input">
+                        </div>
+                        <div class="form-group-full">
+                            <input type="number" id="productPrice" placeholder="Price ($)" class="form-input">
+                        </div>
+                        <div class="form-group-full">
+                            <select id="productCategory" class="form-input">
+                                <option value="all">ALL</option>
+                                <option value="jeans">JEANS</option>
+                                <option value="shirt">SHIRT</option>
+                                <option value="other">OTHER</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Size Selection -->
+                        <div class="form-group-full">
+                            <div class="size-selection">
+                                <label class="section-label">Size (Optional)</label>
+                                <div class="size-options">
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="" checked> 
+                                        <span class="size-label">No Size</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="One Size"> 
+                                        <span class="size-label">One Size</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="S"> 
+                                        <span class="size-label">S</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="M"> 
+                                        <span class="size-label">M</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="L"> 
+                                        <span class="size-label">L</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="XL"> 
+                                        <span class="size-label">XL</span>
+                                    </label>
+                                    <label class="size-option">
+                                        <input type="radio" name="size" value="XXL"> 
+                                        <span class="size-label">XXL</span>
+                                    </label>
+                                    <label class="size-option custom-size">
+                                        <input type="radio" name="size" value="custom"> 
+                                        <span class="size-label">Custom:</span>
+                                        <input type="text" id="customSize" placeholder="e.g., 32, 38" class="custom-size-input" disabled>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-full">
+                            <input type="text" id="productImage" placeholder="Image URL" class="form-input">
+                        </div>
+                        <div class="form-group-full">
+                            <textarea id="productDescription" placeholder="Product Description" class="form-textarea"></textarea>
+                        </div>
+                        <div class="form-group-full">
+                            <button onclick="addNewProduct()" class="add-btn">Add Product</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products List -->
+                <div class="products-list">
+                    <h3>In Stock Products</h3>
+                    <div class="products-grid" id="adminProducts">
+                        <div class="no-products">No products in stock</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sold Out Products Section -->
+            <section id="sold-out" class="admin-section">
+                <h1>Sold Out Products</h1>
+                <div class="products-list">
+                    <h3>Out of Stock Items</h3>
+                    <div class="products-grid" id="soldOutProducts">
+                        <div class="no-products">No sold out products</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="admin-section">
+                <h1>Order Management</h1>
+                
+                <!-- Order Deletion Tools -->
+                <div class="deletion-tools">
+                    <h3>🗑️ Order Cleanup Tools</h3>
+                    <div class="deletion-options">
+                        <div class="deletion-option">
+                            <h4>Delete by Time Period</h4>
+                            <div class="time-options">
+                                <button class="time-btn" onclick="showDeleteConfirmation('week')">
+                                    Delete Last Week's Orders
+                                </button>
+                                <button class="time-btn" onclick="showDeleteConfirmation('month')">
+                                    Delete Last Month's Orders
+                                </button>
+                                <button class="time-btn" onclick="showDeleteConfirmation('old')">
+                                    Delete Orders Older Than 30 Days
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="deletion-option">
+                            <h4>Delete by Status</h4>
+                            <div class="status-options">
+                                <button class="status-btn delivered" onclick="showStatusDeleteConfirmation('Delivered')">
+                                    Delete Delivered Orders (30+ days)
+                                </button>
+                                <button class="status-btn completed" onclick="showStatusDeleteConfirmation('Completed')">
+                                    Delete Completed Orders (30+ days)
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="deletion-option">
+                            <h4>Custom Date Range</h4>
+                            <div class="custom-range">
+                                <div class="date-inputs">
+                                    <label>From:</label>
+                                    <input type="date" id="startDate" class="date-input">
+                                    <label>To:</label>
+                                    <input type="date" id="endDate" class="date-input">
+                                </div>
+                                <button class="custom-btn" onclick="showCustomDeleteConfirmation()">
+                                    Delete Orders in Range
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics -->
+                    <div class="deletion-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Orders this week</div>
+                            <div class="stat-value" id="weekOrders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Orders this month</div>
+                            <div class="stat-value" id="monthOrders">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Old orders (30+ days)</div>
+                            <div class="stat-value" id="oldOrders">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders List -->
+                <div class="orders-list">
+                    <h3>All Orders</h3>
+                    <div id="ordersList">
+                        <div class="no-orders">No orders yet</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sales Reports Section -->
+            <section id="reports" class="admin-section">
+                <h1>Sales Reports</h1>
+                
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-label">Total Orders</div>
+                        <div class="report-value" id="totalOrders">0</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-label">Total Revenue</div>
+                        <div class="report-value" id="totalRevenue">$0</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-label">Pending Orders</div>
+                        <div class="report-value" id="pendingOrders">0</div>
+                    </div>
+                    
+                    <div class="report-card">
+                        <div class="report-label">Completed Orders</div>
+                        <div class="report-value" id="completedOrders">0</div>
+                    </div>
+                </div>
+
+                <div class="orders-list">
+                    <h3>Recent Orders from Store Orders</h3>
+                    <div id="recentOrdersList">
+                        <div class="no-orders">No orders yet</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <button onclick="exportToCSV()" class="save-btn">📥 Export to CSV</button>
+                    <button onclick="clearAllOrders()" class="delete-btn" style="margin-left: 10px;">🗑️ Clear All Orders</button>
+                </div>
+            </section>
+
+            <!-- Website Settings Section -->
+            <section id="website" class="admin-section">
+                <h1>Website Settings</h1>
+                
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label class="setting-label">Website Title</label>
+                        <input type="text" id="websiteTitle" value="ÉLITE MENS" class="setting-input">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">Tagline</label>
+                        <input type="text" id="websiteTagline" value="LUXURY APPAREL" class="setting-input">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">Delivery Fee ($)</label>
+                        <input type="number" id="deliveryFee" value="2" class="setting-input">
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">QR Code Image URL</label>
+                        <input type="text" id="qrCodeUrl" placeholder="Enter QR code image URL" class="setting-input">
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Telegram Bot Token</label>
+                        <input type="text" id="telegramToken" value="8378831399:AAEVsOsJiu1UHpzEIZKIwauioI0rB6xwFcE" class="setting-input">
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Telegram Chat ID</label>
+                        <input type="text" id="telegramChatId" value="1968030249" class="setting-input">
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Admin Password</label>
+                        <input type="text" id="adminPassword" value="2394" class="setting-input">
+                        <div class="setting-note">Current password: 2394</div>
+                    </div>
+
+                    <!-- Products Data Management -->
+                    <div class="setting-group">
+                        <label class="setting-label">Products Data Management</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="exportProducts()" class="save-btn" style="flex: 1; min-width: 200px;">
+                                📥 Export Products Data
+                            </button>
+                            <input type="file" id="importProducts" accept=".json" onchange="importProducts(event)" 
+                                   style="display: none;">
+                            <button onclick="document.getElementById('importProducts').click()" class="secondary-btn" style="flex: 1; min-width: 200px;">
+                                📤 Import Products Data
+                            </button>
+                        </div>
+                        <div class="setting-note">
+                            Export your products to backup, then import on your live site to make them permanent.
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="saveSettings()" class="save-btn">Save Settings</button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h2>🗑️ Confirm Order Deletion</h2>
+            <div id="deleteModalContent">
+                <!-- Content will be filled dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button class="confirm-delete-btn" onclick="confirmDeletion()">DELETE ORDERS</button>
+                <button class="cancel-btn" onclick="closeDeleteModal()">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load admin script -->
+    <script src="js/admin.js"></script>
+</body>
+</html>

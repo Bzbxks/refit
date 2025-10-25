@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Refit - Home | Second - Fit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Luxury Header -->
+    <header class="luxury-header">
+        <div class="header-content">
+            <div class="brand-logo" onclick="goHome()">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">
+                    <div class="brand-name">Refit - Home</div>
+                    <div class="brand-tagline">Second - Fit</div>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#" onclick="filterProducts('all')">ALL</a>
+                <a href="#" onclick="filterProducts('jeans')">JEANS</a>
+                <a href="#" onclick="filterProducts('shirt')">SHIRT</a>
+                <a href="#" onclick="filterProducts('other')">OTHER</a>
+            </nav>
+
+            <!-- Checkout Icon -->
+            <div class="checkout-icon" onclick="goToCheckout()">
+                <div class="cart-icon">🛒</div>
+                <div class="cart-badge" id="cartBadge">0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 class="hero-title">ELEVATE YOUR STYLE</h1>
+            <p class="hero-subtitle">មើលអីវ៉ាន់ទាំងអស់នៅខាងក្រោម</p>
+            <button class="cta-button" onclick="filterProducts('all')">SHOP COLLECTION</button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="section-header">
+            <h2 id="sectionTitle">VIEW ALL STOCK</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="products" id="products"></div>
+    </section>
+
+    <!-- Hidden Admin Access Area -->
+    <div id="secretAdminAccess" style="position: fixed; top: 0; left: 0; width: 60px; height: 60px; background: transparent; cursor: pointer; z-index: 1000;"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
